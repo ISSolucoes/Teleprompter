@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Imagens/Icones/add_texto.png</file>
+    </qresource>
+</RCC>
