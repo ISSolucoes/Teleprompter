@@ -2,8 +2,10 @@ import QtQuick
 import QtMultimedia
 import QtQuick.Controls.Material
 import QtQuick.Layouts
+import QtQuick.LocalStorage
 
 //import "./Teleprompter.qml"
+import "./Database.qml" as Database
 
 ApplicationWindow {
     id: root
@@ -11,6 +13,10 @@ ApplicationWindow {
     title: qsTr("Teleprompter")
     color: "black"
     Material.accent: Material.Blue
+
+    Database {
+        id: database
+    }
 
 
     footer: TabBar {

@@ -15,7 +15,7 @@ qt_add_executable(appteleprompter
 qt_add_qml_module(appteleprompter
     URI teleprompter
     VERSION 1.0
-    QML_FILES main.qml Teleprompter.qml Textos.qml PopUpCriarTextos.qml PopUpEditarTextos.qml
+    QML_FILES main.qml Teleprompter.qml Textos.qml PopUpCriarTextos.qml PopUpEditarTextos.qml Database.qml
 )
 
 set_target_properties(appteleprompter PROPERTIES
