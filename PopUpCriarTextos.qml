@@ -80,6 +80,7 @@ Item {
                         let JS_OBJ_texto = { titulo: titulo, texto: texto };
 
                         textoModel.append(JS_OBJ_texto);
+                        database.storeData(JS_OBJ_texto);
 
                         textAreaTitulo.text = "";
                         textAreaTexto.text = "";

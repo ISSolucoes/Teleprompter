@@ -5,7 +5,7 @@ import QtQuick.Layouts
 import QtQuick.LocalStorage
 
 //import "./Teleprompter.qml"
-import "./Database.qml" as Database
+//import "./Database.qml" // Não precisa do import pois os arquivos estão no mesmo nivel
 
 ApplicationWindow {
     id: root
@@ -17,7 +17,6 @@ ApplicationWindow {
     Database {
         id: database
     }
-
 
     footer: TabBar {
         id: tabBar

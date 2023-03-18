@@ -5,13 +5,21 @@ import QtQuick.Controls.Material
 Item {
     id: itemTextos
 
+    Component.onCompleted: function() {
+        database.initDatabase();
+        let textos = database.readData();
+        for(let indice = 0; indice < textos.length; indice++) {
+            textoModel.append(textos[indice]);
+        }
+    };
+
     Rectangle {
         id: rectTextos
         anchors.fill: itemTextos
 
         RoundButton {
             id: btnAddTexto
-            icon.color: Material.Indigo
+            Material.background: Material.Blue
             icon.name: "add_texto"
             icon.source: "qrc:Imagens/Icones/add_texto.png"
             z: 2

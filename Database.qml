@@ -23,19 +23,18 @@ Item {
         });
     }
 
-    function updateData(textoASerSalvo) {
+    function updateData(indice, textoASerSalvo) {
         console.log("updateData()");
         if( !db ) { return }
 
-        let indice = textoASerSalvo.index;
-
         db.transaction(function(tx){
             console.log(`Atualizando item na tabela textos pelo indice: ${indice}`);
-            let resultado = tx.executeSql(`UPDATE textos set texto=? where id="${indice}"`, [textoASerSalvo.texto]); // supondo que o id em textoModel(ListModel) é igual ao id no banco de dados
+            let resultado = tx.executeSql(`UPDATE textos set texto=? where _id="${indice}"`, [textoASerSalvo.texto]); // supondo que o id em textoModel(ListModel) é igual ao id no banco de dados
         });
     }
 
     function readData() {
+        let vetorTextos = [];
         console.log("readData()");
         if( !db ) { return }
         db.transaction(function(tx) {
@@ -48,18 +47,17 @@ Item {
                 console.log("No minimo um dado na tabela");
 
                 for(let indice = 0; indice < linhas.length; indice++) {
-                    const valorEmString = linhas[indice].value;
-                    const valorEmJSON = JSON.parse(valorEmString);
-
-                    textoModel.append(valorEmJSON);
+                    const objetoTexto = linhas[indice];
+                    vetorTextos.push(objetoTexto);
                 }
             }
         });
+        return vetorTextos;
     }
 
     Component.onCompleted: function() {
-        initDatabase();
-        readData();
+        //initDatabase();
+        //readData(); // a se fazer apenas quando o componente Textos iniciar
     }
 
     Component.onDestruction: function() {

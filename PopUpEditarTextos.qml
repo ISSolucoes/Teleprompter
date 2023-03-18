@@ -87,6 +87,7 @@ Item {
 
                         let indice = model.index;
 
+                        database.updateData(indice, JS_OBJ_texto);
                         textoModel.remove(indice, 1);
                         textoModel.insert(indice, JS_OBJ_texto);
 
