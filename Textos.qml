@@ -68,6 +68,7 @@ Item {
                     id: popUpEditarTexto
                     anchors.centerIn: colunaPrincipal
                     topMargin: rectTextos.height * 12.5/100
+                    bottomMargin: rectTextos.height * 12.5/100
                     width: rectTextos.width * 85/100
                     height: rectTextos.height * 85/100
                     modal: true

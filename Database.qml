@@ -9,7 +9,7 @@ Item {
         db = LocalStorage.openDatabaseSync("Textos", "1.0", "Banco de dados de textos do usuário", 250000000);
         db.transaction(function(tx) {
             console.log("Create table");
-            tx.executeSql('CREATE TABLE IF NOT EXISTS textos(titulo TEXT, texto TEXT)');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS textos(titulo TEXT, texto TEXT)'); // automaticamente o sqlite cria a coluna rowid
         });
     }
 
@@ -19,7 +19,7 @@ Item {
 
         db.transaction(function(tx){
             console.log("Salvando item na tabela textos");
-            let resultado = tx.executeSql('INSERT INTO textos VALUES (?,?)', [textoASerSalvo.titulo, textoASerSalvo.texto]);
+            let resultado = tx.executeSql('INSERT INTO textos (titulo, texto) VALUES (?,?)', [textoASerSalvo.titulo, textoASerSalvo.texto]);
         });
     }
 
@@ -29,7 +29,8 @@ Item {
 
         db.transaction(function(tx){
             console.log(`Atualizando item na tabela textos pelo indice: ${indice}`);
-            let resultado = tx.executeSql(`UPDATE textos set texto=? where _id="${indice}"`, [textoASerSalvo.texto]); // supondo que o id em textoModel(ListModel) é igual ao id no banco de dados
+            let resultado = tx.executeSql(`UPDATE textos set titulo=?, texto=? where rowid="${indice}"`, [textoASerSalvo.titulo, textoASerSalvo.texto]); // supondo que o id em textoModel(ListModel) é igual ao id no banco de dados
+            console.log("Operação bem sucedida");
         });
     }
 

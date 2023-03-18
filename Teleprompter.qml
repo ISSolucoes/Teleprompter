@@ -58,8 +58,8 @@ Item {
         Flickable {
             id: flick
             z:1
-            //anchors.top: 10/100
-            //anchors.horizontalCenter: coluna.horizontalCenter
+            anchors.top: 10/100
+            anchors.horizontalCenter: coluna.horizontalCenter
             width: root.width //- (root.width * 10/100)
             height: root.height * 1/4;
             flickableDirection: Flickable.VerticalFlick
