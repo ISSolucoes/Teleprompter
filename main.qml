@@ -23,12 +23,14 @@ ApplicationWindow {
         TabButton {
             id: teleprompter
             icon.name: "Teleprompter"
-            text: "Teleprompter"
+            icon.source: "qrc:Imagens/Icones/video.png"
+            //text: "Teleprompter"
         }
         TabButton {
             id: textos
             icon.name: "Textos"
-            text: "Textos"
+            icon.source: "qrc:Imagens/Icones/texto.png"
+            //text: "Textos"
         }
     }
 

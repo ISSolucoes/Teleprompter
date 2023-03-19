@@ -47,7 +47,7 @@ Item {
             }*/
             //placeholderText: "Digite aqui seu texto"
             //placeholderTextColor: "black"
-            text: ""
+            text: "teste"
             width: root.width
             height: root.height * 1/4
             cursorVisible: false
