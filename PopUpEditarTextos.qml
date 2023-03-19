@@ -85,11 +85,11 @@ Item {
                         let texto = textAreaTexto.text;
                         let JS_OBJ_texto = { titulo: titulo, texto: texto };
 
-                        let indice = model.index;
+                        let indiceNoListModel = model.index;
 
-                        database.updateData(indice, JS_OBJ_texto);
-                        textoModel.remove(indice, 1);
-                        textoModel.insert(indice, JS_OBJ_texto);
+                        database.updateData(indiceNoListModel, JS_OBJ_texto);
+                        textoModel.remove(indiceNoListModel, 1);
+                        textoModel.insert(indiceNoListModel, JS_OBJ_texto);
 
                         textAreaTitulo.text = "";
                         textAreaTexto.text = "";

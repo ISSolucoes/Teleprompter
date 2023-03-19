@@ -3,41 +3,77 @@ import QtQuick.LocalStorage
 
 Item {
     property var db
+    //signal emiteTextoUsado(string texto);
 
     function initDatabase() {
         console.log("initDatabase()");
         db = LocalStorage.openDatabaseSync("Textos", "1.0", "Banco de dados de textos do usuário", 250000000);
         db.transaction(function(tx) {
             console.log("Create table");
-            tx.executeSql('CREATE TABLE IF NOT EXISTS textos(titulo TEXT, texto TEXT)'); // automaticamente o sqlite cria a coluna rowid
+            tx.executeSql('CREATE TABLE IF NOT EXISTS textos(titulo TEXT, texto TEXT, isUsed INT)'); // automaticamente o sqlite cria a coluna rowid
         });
     }
 
     function storeData(textoASerSalvo) {
         console.log("storeData()");
-        if( !db ) { return }
+
+        if( !db ) {
+            console.log("Banco de dados não iniciado!");
+            return;
+        }
 
         db.transaction(function(tx){
             console.log("Salvando item na tabela textos");
-            let resultado = tx.executeSql('INSERT INTO textos (titulo, texto) VALUES (?,?)', [textoASerSalvo.titulo, textoASerSalvo.texto]);
+            let resultado = tx.executeSql('INSERT INTO textos (titulo, texto, isUsed) VALUES (?,?,?)', [textoASerSalvo.titulo, textoASerSalvo.texto, 0]);
         });
     }
 
-    function updateData(indice, textoASerSalvo) {
+    function updateData(indiceNoListModel, textoASerSalvo) {
         console.log("updateData()");
-        if( !db ) { return }
+
+        if( !db ) {
+            console.log("Banco de dados não iniciado!");
+            return;
+        }
+
+        let indiceNoBD = ++indiceNoListModel; // o indice no ListModel começa pelo 0. Já no DB, o id se inicia pelo 1. Incrementamos uma vez para alinhar
+        // o item na View com o item no banco.
 
         db.transaction(function(tx){
-            console.log(`Atualizando item na tabela textos pelo indice: ${indice}`);
-            let resultado = tx.executeSql(`UPDATE textos set titulo=?, texto=? where rowid="${indice}"`, [textoASerSalvo.titulo, textoASerSalvo.texto]); // supondo que o id em textoModel(ListModel) é igual ao id no banco de dados
+            console.log(`Atualizando item na tabela textos pelo indice no banco: ${indiceNoBD}`);
+            let resultado = tx.executeSql(`UPDATE textos set titulo=?, texto=? where rowid="${indiceNoBD}"`, [textoASerSalvo.titulo, textoASerSalvo.texto]); // supondo que o id em textoModel(ListModel) é igual ao id no banco de dados
             console.log("Operação bem sucedida");
         });
+    }
+
+    function usarTexto(indiceNoListModel) {
+        console.log("usarTexto()");
+
+        if( !db ) {
+            console.log("Banco de dados não iniciado");
+            return;
+        }
+
+        let indiceNoBD = ++indiceNoListModel;
+
+        db.transaction(function(tx){
+            console.log(`Atualizando item na tabela textos pelo indice no banco: ${indiceNoBD}. Para ser usado no teleprompter`);
+            let resultado = tx.executeSql(`UPDATE textos set isUsed=? where rowid="${indiceNoBD}"`, [1]);
+            //let resultadoSelect
+            //emiteTextoUsado();
+        });
+
     }
 
     function readData() {
         let vetorTextos = [];
         console.log("readData()");
-        if( !db ) { return }
+
+        if( !db ) {
+            console.log("Banco de dados não iniciado!");
+            return;
+        }
+
         db.transaction(function(tx) {
             console.log(`Lendo textos do banco "Textos", na tabela "textos"`);
             const resultado = tx.executeSql('select * from textos');
@@ -54,6 +90,20 @@ Item {
             }
         });
         return vetorTextos;
+    }
+
+    function deleteAll() {
+        console.log("deleteAll()")
+        if( !db ) {
+            console.log("Banco de dados não iniciado!");
+            return;
+        }
+
+        db.transaction(function(tx) {
+            console.log("Deletando todos os itens");
+            const resultado = tx.executeSql('DELETE FROM textos');
+        });
+
     }
 
     Component.onCompleted: function() {

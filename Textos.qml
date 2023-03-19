@@ -7,6 +7,7 @@ Item {
 
     Component.onCompleted: function() {
         database.initDatabase();
+        //database.deleteAll();
         let textos = database.readData();
         for(let indice = 0; indice < textos.length; indice++) {
             textoModel.append(textos[indice]);
