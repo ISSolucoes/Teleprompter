@@ -29,7 +29,7 @@ Item {
         anchors.horizontalCenter: root.horizontalCenter
 
         TextArea {
-            id: textArea
+            id: textAreaTeleprompter
             anchors.horizontalCenter: parent.horizontalCenter
             activeFocusOnPress: false
             font {
@@ -47,7 +47,7 @@ Item {
             }*/
             //placeholderText: "Digite aqui seu texto"
             //placeholderTextColor: "black"
-            text: "teste"
+            text: textoTeleprompterTabPrincipal
             width: root.width
             height: root.height * 1/4
             cursorVisible: false
@@ -64,7 +64,7 @@ Item {
             height: root.height * 1/4;
             flickableDirection: Flickable.VerticalFlick
 
-            TextArea.flickable: textArea
+            TextArea.flickable: textAreaTeleprompter
 
             ScrollBar.vertical: ScrollBar {
                 anchors {

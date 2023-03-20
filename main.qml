@@ -14,9 +14,7 @@ ApplicationWindow {
     color: "black"
     Material.accent: Material.Blue
 
-    Database {
-        id: database
-    }
+    property string textoTeleprompterTabPrincipal: "exemplo";
 
     footer: TabBar {
         id: tabBar
@@ -53,6 +51,14 @@ ApplicationWindow {
             }
         }
 
+    }
+
+    Database {
+        id: database
+        onEmiteTextoUsado: function(textoUsado) {
+            console.log("Entrou db usado");
+            textoTeleprompterTabPrincipal = textoUsado;
+        }
     }
 
 

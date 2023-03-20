@@ -61,6 +61,9 @@ Item {
                     text: qsTr("Usar texto")
                     onClicked: function usarTexto() {
 
+                        let indiceNoListModel = model.index;
+                        database.usarTexto(indiceNoListModel);
+
                         textAreaTitulo.text = "";
                         textAreaTexto.text = "";
 

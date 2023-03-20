@@ -3,7 +3,7 @@ import QtQuick.LocalStorage
 
 Item {
     property var db
-    //signal emiteTextoUsado(string texto);
+    signal emiteTextoUsado(string texto);
 
     function initDatabase() {
         console.log("initDatabase()");
@@ -11,6 +11,7 @@ Item {
         db.transaction(function(tx) {
             console.log("Create table");
             tx.executeSql('CREATE TABLE IF NOT EXISTS textos(titulo TEXT, texto TEXT, isUsed INT)'); // automaticamente o sqlite cria a coluna rowid
+            //const resultadoDropTable = tx.executeSql('DROP TABLE IF EXISTS textos');
         });
     }
 
@@ -41,7 +42,7 @@ Item {
 
         db.transaction(function(tx){
             console.log(`Atualizando item na tabela textos pelo indice no banco: ${indiceNoBD}`);
-            let resultado = tx.executeSql(`UPDATE textos set titulo=?, texto=? where rowid="${indiceNoBD}"`, [textoASerSalvo.titulo, textoASerSalvo.texto]); // supondo que o id em textoModel(ListModel) é igual ao id no banco de dados
+            const resultado = tx.executeSql(`UPDATE textos set titulo=?, texto=? where rowid="${indiceNoBD}"`, [textoASerSalvo.titulo, textoASerSalvo.texto]); // supondo que o id em textoModel(ListModel) é igual ao id no banco de dados
             console.log("Operação bem sucedida");
         });
     }
@@ -58,9 +59,12 @@ Item {
 
         db.transaction(function(tx){
             console.log(`Atualizando item na tabela textos pelo indice no banco: ${indiceNoBD}. Para ser usado no teleprompter`);
+            const resultadoSetAll0 = tx.executeSql(`UPDATE textos set isUsed=?`, [0]);
             let resultado = tx.executeSql(`UPDATE textos set isUsed=? where rowid="${indiceNoBD}"`, [1]);
-            //let resultadoSelect
-            //emiteTextoUsado();
+            let resultadoSelect = tx.executeSql(`select * from textos where rowid="${indiceNoBD}"`);
+            console.log(resultadoSelect.rows[0].texto);
+            let texto = resultadoSelect.rows[0].texto;
+            emiteTextoUsado(texto);
         });
 
     }
