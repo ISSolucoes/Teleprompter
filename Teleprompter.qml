@@ -29,71 +29,89 @@ Item {
 
     Rectangle {
         id: retanguloTexto
-        width: parent.width * 90/100
+        width: parent.width * 95/100
         height: parent.height * 25/100
         color: "transparent"
-        border.width: 5
-        border.color: "white"
+        border.width: 10
+        border.color: "#2196F3"
         radius: 10
         anchors.horizontalCenter: parent.horizontalCenter
 
-        TextArea {
-            id: textAreaTeleprompter
-            anchors.horizontalCenter: parent.horizontalCenter
-            activeFocusOnPress: false
-            font {
-                pixelSize: 25
-                underline: false
-                italic: true
-                bold: true
+        Drag.active: dragArea.drag.active
 
+        MouseArea {
+            id: dragArea
+            anchors.fill: parent
+            drag.target: parent
+            onPressed: function() {
+                retanguloTexto.border.color = "#FFC107";
             }
-            horizontalAlignment: TextEdit.AlignHCenter
-            /*onPressed: function() {
-                textArea.placeholderText = "";
-                textArea.horizontalAlignment = TextEdit.AlignJustify;
-                textArea.cursorPosition = 0;
-            }*/
-            //placeholderText: "Digite aqui seu texto"
-            //placeholderTextColor: "black"
-            text: textoTeleprompterTabPrincipal
-            width: parent.width
-            height: parent.height
-            cursorVisible: false
-            wrapMode: Text.Wrap
-            clip: true
-            color: "white"
-            background: Rectangle {
-                color: "black"
-                opacity: 0.5
-                radius: 10
+            onReleased: function() {
+                retanguloTexto.border.color = "#2196F3";
             }
         }
 
-        Flickable {
-            id: flick
-            z:1
-            anchors.horizontalCenter: teleprompterTab.horizontalCenter
-            width: parent.width
-            height: parent.height
-            flickableDirection: Flickable.VerticalFlick
+        Rectangle {
+            id: rectTextoInternoRetanguloTexto
+            width: parent.width * 90/100
+            height: parent.height * 90/100
+            anchors.centerIn: parent
+            color: "transparent"
 
-            TextArea.flickable: textAreaTeleprompter
-
-            ScrollBar.vertical: ScrollBar {
-                anchors {
-                    topMargin: 3
-                    bottomMargin: 3
+            TextArea {
+                id: textAreaTeleprompter
+                readOnly: true
+                anchors.horizontalCenter: parent.horizontalCenter
+                activeFocusOnPress: false
+                font {
+                    pixelSize: 25
+                    underline: false
+                    italic: true
+                    bold: true
                 }
-
-                contentItem: Rectangle {
-                    radius: 10
+                horizontalAlignment: TextEdit.AlignHCenter
+                text: textoTeleprompterTabPrincipal
+                width: parent.width
+                height: parent.height
+                cursorVisible: false
+                wrapMode: Text.Wrap
+                clip: true
+                color: "white"
+                /*background: Rectangle {
                     color: "black"
-                    opacity: 0.4
+                    opacity: 0.5
+                    radius: 10
+                }*/
+            }
+
+            Flickable {
+                id: flick
+                z:1
+                anchors.horizontalCenter: teleprompterTab.horizontalCenter
+                width: parent.width
+                height: parent.height
+                flickableDirection: Flickable.VerticalFlick
+
+                TextArea.flickable: textAreaTeleprompter
+
+                ScrollBar.vertical: ScrollBar {
+                    anchors {
+                        topMargin: 3
+                        bottomMargin: 3
+                    }
+
+                    contentItem: Rectangle {
+                        radius: 10
+                        color: "black"
+                        opacity: 0.4
+                    }
                 }
+
             }
 
         }
+
+
 
     }
 }
