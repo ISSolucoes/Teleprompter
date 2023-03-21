@@ -4,6 +4,8 @@ import QtMultimedia
 
 Item {
 
+    antialiasing: true
+
     MediaDevices {
         id: mediaDevices
     }
@@ -24,9 +26,16 @@ Item {
         }
     }
 
+
     Rectangle {
         id: retanguloTexto
-        anchors.horizontalCenter: root.horizontalCenter
+        width: parent.width * 90/100
+        height: parent.height * 25/100
+        color: "transparent"
+        border.width: 5
+        border.color: "white"
+        radius: 10
+        anchors.horizontalCenter: parent.horizontalCenter
 
         TextArea {
             id: textAreaTeleprompter
@@ -48,20 +57,25 @@ Item {
             //placeholderText: "Digite aqui seu texto"
             //placeholderTextColor: "black"
             text: textoTeleprompterTabPrincipal
-            width: root.width
-            height: root.height * 1/4
+            width: parent.width
+            height: parent.height
             cursorVisible: false
             wrapMode: Text.Wrap
             clip: true
+            color: "white"
+            background: Rectangle {
+                color: "black"
+                opacity: 0.5
+                radius: 10
+            }
         }
 
         Flickable {
             id: flick
             z:1
-            anchors.top: 10/100
-            anchors.horizontalCenter: coluna.horizontalCenter
-            width: root.width //- (root.width * 10/100)
-            height: root.height * 1/4;
+            anchors.horizontalCenter: teleprompterTab.horizontalCenter
+            width: parent.width
+            height: parent.height
             flickableDirection: Flickable.VerticalFlick
 
             TextArea.flickable: textAreaTeleprompter

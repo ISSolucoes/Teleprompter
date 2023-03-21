@@ -5,6 +5,8 @@ import QtQuick.Controls.Material
 Item {
     id: itemTextos
 
+    antialiasing: true
+
     Component.onCompleted: function() {
         database.initDatabase();
         //database.deleteAll();

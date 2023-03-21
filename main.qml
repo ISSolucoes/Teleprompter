@@ -43,6 +43,7 @@ ApplicationWindow {
         id: pilhaLayout
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
+        antialiasing: true
 
         Item {
             id: teleprompterTab
