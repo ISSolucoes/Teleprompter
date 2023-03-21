@@ -62,9 +62,29 @@ Item {
             const resultadoSetAll0 = tx.executeSql(`UPDATE textos set isUsed=?`, [0]);
             let resultado = tx.executeSql(`UPDATE textos set isUsed=? where rowid="${indiceNoBD}"`, [1]);
             let resultadoSelect = tx.executeSql(`select * from textos where rowid="${indiceNoBD}"`);
-            console.log(resultadoSelect.rows[0].texto);
             let texto = resultadoSelect.rows[0].texto;
             emiteTextoUsado(texto);
+        });
+
+    }
+
+    function setTextoInicial() {
+        console.log("setTextoInicial()");
+
+        if( !db ) {
+            console.log("Banco de dados não iniciado");
+            return;
+        }
+
+        let texto = "";
+
+        db.transaction(function(tx){
+            let resultadoSelect = tx.executeSql(`select * from textos where isUsed="${1}"`);
+            console.log(resultadoSelect.rows);
+            if( resultadoSelect.rows.length > 0 ) {
+                texto = resultadoSelect.rows[0].texto;
+                emiteTextoUsado(texto);
+            }
         });
 
     }
@@ -113,6 +133,7 @@ Item {
     Component.onCompleted: function() {
         //initDatabase();
         //readData(); // a se fazer apenas quando o componente Textos iniciar
+        setTextoInicial();
     }
 
     Component.onDestruction: function() {

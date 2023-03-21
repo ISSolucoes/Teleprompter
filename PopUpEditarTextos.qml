@@ -64,9 +64,6 @@ Item {
                         let indiceNoListModel = model.index;
                         database.usarTexto(indiceNoListModel);
 
-                        textAreaTitulo.text = "";
-                        textAreaTexto.text = "";
-
                         popUpEditarTexto.close();
 
                     }
@@ -93,9 +90,6 @@ Item {
                         database.updateData(indiceNoListModel, JS_OBJ_texto);
                         textoModel.remove(indiceNoListModel, 1);
                         textoModel.insert(indiceNoListModel, JS_OBJ_texto);
-
-                        textAreaTitulo.text = "";
-                        textAreaTexto.text = "";
 
                         popUpEditarTexto.close();
                     }
