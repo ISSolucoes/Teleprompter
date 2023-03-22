@@ -4,6 +4,8 @@ import QtMultimedia
 
 Item {
 
+    property var posicaoBarraDeRolagem: 0.0
+
     antialiasing: true
 
     MediaDevices {
@@ -58,33 +60,35 @@ Item {
             anchors.centerIn: parent
             color: "transparent"
 
-            TextArea {
-                id: textAreaTeleprompter
-                readOnly: true
-                anchors.horizontalCenter: parent.horizontalCenter
-                activeFocusOnPress: false
-                font {
-                    pixelSize: 25
-                    underline: false
-                    italic: true
-                    bold: true
+            ScrollView {
+                id: scrollViewTextAreaTeleprompter
+                anchors.fill: parent
+                ScrollBar.vertical.position: posicaoBarraDeRolagem
+
+                TextArea {
+                    id: textAreaTeleprompter
+                    readOnly: true
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    activeFocusOnPress: false
+                    font {
+                        pixelSize: 25
+                        underline: false
+                        italic: true
+                        bold: true
+                    }
+                    horizontalAlignment: TextEdit.AlignHCenter
+                    text: textoTeleprompterTabPrincipal
+                    width: parent.width
+                    height: parent.height
+                    cursorVisible: false
+                    wrapMode: Text.Wrap
+                    clip: true
+                    color: "white"
                 }
-                horizontalAlignment: TextEdit.AlignHCenter
-                text: textoTeleprompterTabPrincipal
-                width: parent.width
-                height: parent.height
-                cursorVisible: false
-                wrapMode: Text.Wrap
-                clip: true
-                color: "white"
-                /*background: Rectangle {
-                    color: "black"
-                    opacity: 0.5
-                    radius: 10
-                }*/
+
             }
 
-            Flickable {
+            /*Flickable {
                 id: flick
                 z:1
                 anchors.horizontalCenter: teleprompterTab.horizontalCenter
@@ -93,6 +97,8 @@ Item {
                 flickableDirection: Flickable.VerticalFlick
 
                 TextArea.flickable: textAreaTeleprompter
+
+                contentY: 100
 
                 ScrollBar.vertical: ScrollBar {
                     anchors {
@@ -107,7 +113,7 @@ Item {
                     }
                 }
 
-            }
+            }*/
 
         }
 
