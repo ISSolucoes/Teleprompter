@@ -1,13 +1,16 @@
 import QtQuick
 import QtQuick.Controls.Material
 import QtMultimedia
+import QtQuick.Layouts
 
 Item {
 
-    property var posicaoBarraDeRolagem: 0.0
+    property real posicaoBarraDeRolagem: 0.0
+    property int cameraEscolhida: 1
 
     antialiasing: true
 
+    // ----------------------------------------  VIDEO Components -----------------------------------------
     MediaDevices {
         id: mediaDevices
     }
@@ -24,17 +27,41 @@ Item {
         camera: Camera {
             id: camera
             focusMode: Camera.FocusModeAutoNear
-            cameraDevice: mediaDevices.videoInputs[1]
+            cameraDevice: mediaDevices.videoInputs[cameraEscolhida]
+        }
+        recorder: MediaRecorder {
+            id: mediaRecorder
+            quality: MediaRecorder.VeryLowQuality
+            onActualLocationChanged: function(url) {
+                console.log("actualLocation: " + url);
+            }
+            outputLocation: "file:///storage/emulated/0/DCIM/Camera"
+            onErrorOccurred: function(error) {
+                console.log("Error ocurred: " + error);
+            }
         }
     }
+    // ----------------------------------------  VIDEO Components -----------------------------------------
 
+    // ----------------------------------------  TIMER -----------------------------------------
+    Timer {
+        id: timerRolagemTexto
+        interval: 500
+        triggeredOnStart: false; repeat: true; running: false
+        onTriggered: function() {
+            posicaoBarraDeRolagem += 0.02; // Lembre-se de dinamizar o incremento de position da scrollBar
+        }
 
+    }
+    // ----------------------------------------  TIMER -----------------------------------------
+
+    // ----------------------------------------  View components -----------------------------------------
     Rectangle {
         id: retanguloTexto
         width: parent.width * 95/100
         height: parent.height * 25/100
         color: "transparent"
-        border.width: 10
+        border.width: 15
         border.color: "#2196F3"
         radius: 10
         anchors.horizontalCenter: parent.horizontalCenter
@@ -45,6 +72,8 @@ Item {
             id: dragArea
             anchors.fill: parent
             drag.target: parent
+            drag.maximumY: teleprompterTab.height * 60/100
+            drag.minimumY: 0
             onPressed: function() {
                 retanguloTexto.border.color = "#FFC107";
             }
@@ -55,69 +84,131 @@ Item {
 
         Rectangle {
             id: rectTextoInternoRetanguloTexto
-            width: parent.width * 90/100
-            height: parent.height * 90/100
+            width: retanguloTexto.width * 90/100
+            height: retanguloTexto.height * 90/100
             anchors.centerIn: parent
             color: "transparent"
 
             ScrollView {
                 id: scrollViewTextAreaTeleprompter
-                anchors.fill: parent
+                height: rectTextoInternoRetanguloTexto.height
+                width: rectTextoInternoRetanguloTexto.width
                 ScrollBar.vertical.position: posicaoBarraDeRolagem
+                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                ScrollBar.horizontal.interactive: false
+                ScrollBar.horizontal.hoverEnabled: false
 
                 TextArea {
                     id: textAreaTeleprompter
+                    color: "white"
                     readOnly: true
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    activeFocusOnPress: false
+                    cursorVisible: false
                     font {
-                        pixelSize: 25
+                        pointSize: 25
                         underline: false
                         italic: true
                         bold: true
                     }
                     horizontalAlignment: TextEdit.AlignHCenter
                     text: textoTeleprompterTabPrincipal
-                    width: parent.width
-                    height: parent.height
-                    cursorVisible: false
+                    width: scrollViewTextAreaTeleprompter.width
+                    height: scrollViewTextAreaTeleprompter.height
                     wrapMode: Text.Wrap
-                    clip: true
-                    color: "white"
                 }
+
 
             }
 
-            /*Flickable {
-                id: flick
-                z:1
-                anchors.horizontalCenter: teleprompterTab.horizontalCenter
-                width: parent.width
-                height: parent.height
-                flickableDirection: Flickable.VerticalFlick
-
-                TextArea.flickable: textAreaTeleprompter
-
-                contentY: 100
-
-                ScrollBar.vertical: ScrollBar {
-                    anchors {
-                        topMargin: 3
-                        bottomMargin: 3
-                    }
-
-                    contentItem: Rectangle {
-                        radius: 10
-                        color: "black"
-                        opacity: 0.4
-                    }
-                }
-
-            }*/
-
         }
 
+    }
 
+    Rectangle {
+        id: rectEspacoBotoesGravacao
+        width: teleprompterTab.width
+        height: teleprompterTab.height * 10/100
+        anchors.bottom: parent.bottom
+        color: "black"
+        opacity: 0.7
+        z: 1
+
+        GridLayout {
+            id: gridBotoesGravacao
+            anchors.fill: rectEspacoBotoesGravacao
+            anchors.centerIn: rectEspacoBotoesGravacao
+            columns: 3
+            z: 2
+            RoundButton {
+                id: virarButton
+                anchors.left: gridBotoesGravacao.left
+                anchors.leftMargin: gridBotoesGravacao.width * 10/100
+                //Material.background: "white"
+                icon.name: "cameraSwitch"
+                icon.source: "qrc:Imagens/Icones/cameraSwitch.png"
+                antialiasing: true
+                scale: 1.35
+                onClicked: function() {
+                    if( cameraEscolhida === 1 ) {
+                        cameraEscolhida = 0;
+                    } else if ( cameraEscolhida === 0 ) {
+                        cameraEscolhida = 1;
+                    }
+
+                    console.log("Botão virar clickado");
+                }
+            }
+            RoundButton {
+                id: recordButton
+                anchors.centerIn: gridBotoesGravacao
+                property bool bandeiraIconPlay: true
+                //Material.background: "white"
+                icon.name: "playCircle"
+                icon.source: "qrc:Imagens/Icones/playCircle.png"
+                antialiasing: true
+                scale: 1.6
+                onClicked: function() {
+                    if( bandeiraIconPlay ) {
+                        recordButton.icon.source = "qrc:Imagens/Icones/stopCircle.png";
+                        bandeiraIconPlay = false;
+
+                        mediaRecorder.record();
+
+                        timerRolagemTexto.start();
+
+                        if( posicaoBarraDeRolagem === 1.0 ) {
+                            console.log("Parou de rolar");
+                            timerRolagemTexto.stop();
+                        }
+
+                        posicaoBarraDeRolagem = 0.0;
+
+
+                    } else {
+                        recordButton.icon.source = "qrc:Imagens/Icones/playCircle.png";
+                        bandeiraIconPlay = true;
+
+                        mediaRecorder.stop();
+
+                        timerRolagemTexto.stop();
+
+                    }
+                    console.log("Botão gravar clickado");
+                }
+            }
+            RoundButton {
+                id: mudarVelocidadeTextoButton
+                anchors.right: gridBotoesGravacao.right
+                anchors.rightMargin: gridBotoesGravacao.width * 10/100
+                //Material.background: "white"
+                icon.name: "vel"
+                icon.source: "qrc:Imagens/Icones/vel.png"
+                antialiasing: true
+                scale: 1.35
+                onClicked: function() {
+                    console.log("Botão velocidade de texto clickado");
+                }
+            }
+        }
 
     }
 }
