@@ -29,6 +29,10 @@ Item {
             focusMode: Camera.FocusModeAutoNear
             cameraDevice: mediaDevices.videoInputs[cameraEscolhida]
         }
+        audioInput: AudioInput {
+            id: audioInputVideo
+            volume: 1
+        }
         recorder: MediaRecorder {
             id: mediaRecorder
             quality: MediaRecorder.VeryLowQuality
@@ -46,10 +50,15 @@ Item {
     // ----------------------------------------  TIMER -----------------------------------------
     Timer {
         id: timerRolagemTexto
-        interval: 500
+        interval: 100
         triggeredOnStart: false; repeat: true; running: false
         onTriggered: function() {
-            posicaoBarraDeRolagem += 0.02; // Lembre-se de dinamizar o incremento de position da scrollBar
+            posicaoBarraDeRolagem += 0.005; // Lembre-se de dinamizar o incremento de position da scrollBar
+            console.log("Size: " + scrollViewTextAreaTeleprompter.ScrollBar.vertical.size);
+            console.log("posicaoBarraDeRolagem: " + posicaoBarraDeRolagem);
+            if( posicaoBarraDeRolagem >= (1.0 - scrollViewTextAreaTeleprompter.ScrollBar.vertical.size) ) {
+                timerRolagemTexto.stop();
+            }
         }
 
     }
@@ -58,8 +67,8 @@ Item {
     // ----------------------------------------  View components -----------------------------------------
     Rectangle {
         id: retanguloTexto
-        width: parent.width * 95/100
-        height: parent.height * 25/100
+        width: teleprompterTab.width * 95/100
+        height: teleprompterTab.height * 25/100
         color: "transparent"
         border.width: 15
         border.color: "#2196F3"
@@ -103,6 +112,7 @@ Item {
                     color: "white"
                     readOnly: true
                     cursorVisible: false
+                    activeFocusOnPress: false
                     font {
                         pointSize: 25
                         underline: false
@@ -115,7 +125,6 @@ Item {
                     height: scrollViewTextAreaTeleprompter.height
                     wrapMode: Text.Wrap
                 }
-
 
             }
 
@@ -130,14 +139,14 @@ Item {
         anchors.bottom: parent.bottom
         color: "black"
         opacity: 0.7
-        z: 1
 
         GridLayout {
             id: gridBotoesGravacao
             anchors.fill: rectEspacoBotoesGravacao
             anchors.centerIn: rectEspacoBotoesGravacao
             columns: 3
-            z: 2
+            opacity: 1
+
             RoundButton {
                 id: virarButton
                 anchors.left: gridBotoesGravacao.left
@@ -174,11 +183,6 @@ Item {
                         mediaRecorder.record();
 
                         timerRolagemTexto.start();
-
-                        if( posicaoBarraDeRolagem === 1.0 ) {
-                            console.log("Parou de rolar");
-                            timerRolagemTexto.stop();
-                        }
 
                         posicaoBarraDeRolagem = 0.0;
 
