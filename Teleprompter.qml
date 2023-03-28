@@ -74,6 +74,7 @@ Item {
         border.color: "#2196F3"
         radius: 10
         anchors.horizontalCenter: parent.horizontalCenter
+        visible: textAreaTeleprompter.contentWidth > 0 ? true : false
 
         Drag.active: dragArea.drag.active
 
@@ -93,10 +94,13 @@ Item {
 
         Rectangle {
             id: rectTextoInternoRetanguloTexto
-            width: retanguloTexto.width * 90/100
-            height: retanguloTexto.height * 90/100
+            //width: retanguloTexto.width * 90/100
+            //height: retanguloTexto.height * 90/100
+            anchors.fill: parent
+            anchors.margins: retanguloTexto.border.width
             anchors.centerIn: parent
-            color: "transparent"
+            color: "black"
+            opacity: 0.7
 
             ScrollView {
                 id: scrollViewTextAreaTeleprompter
@@ -138,14 +142,13 @@ Item {
         height: teleprompterTab.height * 10/100
         anchors.bottom: parent.bottom
         color: "black"
-        opacity: 0.7
+        opacity: 1
 
         GridLayout {
             id: gridBotoesGravacao
             anchors.fill: rectEspacoBotoesGravacao
             anchors.centerIn: rectEspacoBotoesGravacao
             columns: 3
-            opacity: 1
 
             RoundButton {
                 id: virarButton
@@ -169,8 +172,9 @@ Item {
             RoundButton {
                 id: recordButton
                 anchors.centerIn: gridBotoesGravacao
+
                 property bool bandeiraIconPlay: true
-                //Material.background: "white"
+
                 icon.name: "playCircle"
                 icon.source: "qrc:Imagens/Icones/playCircle.png"
                 antialiasing: true
@@ -186,6 +190,9 @@ Item {
 
                         posicaoBarraDeRolagem = 0.0;
 
+                        virarButton.visible = false;
+                        mudarVelocidadeTextoButton.visible = false;
+
 
                     } else {
                         recordButton.icon.source = "qrc:Imagens/Icones/playCircle.png";
@@ -194,6 +201,9 @@ Item {
                         mediaRecorder.stop();
 
                         timerRolagemTexto.stop();
+
+                        virarButton.visible = true;
+                        mudarVelocidadeTextoButton.visible = true;
 
                     }
                     console.log("Botão gravar clickado");
