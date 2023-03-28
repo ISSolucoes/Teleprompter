@@ -69,11 +69,12 @@ Item {
         id: retanguloTexto
         width: teleprompterTab.width * 95/100
         height: teleprompterTab.height * 25/100
+        x: (teleprompterTab.width * 5/100)/2
         color: "transparent"
         border.width: 15
         border.color: "#2196F3"
         radius: 10
-        anchors.horizontalCenter: parent.horizontalCenter
+        //anchors.horizontalCenter: parent.horizontalCenter
         visible: textAreaTeleprompter.contentWidth > 0 ? true : false
 
         Drag.active: dragArea.drag.active
@@ -84,6 +85,9 @@ Item {
             drag.target: parent
             drag.maximumY: teleprompterTab.height * 60/100
             drag.minimumY: 0
+            drag.maximumX: teleprompterTab.width - retanguloTexto.width
+            drag.minimumX: 0
+            drag.axis: Drag.XAndYAxis
             onPressed: function() {
                 retanguloTexto.border.color = "#FFC107";
             }

@@ -3,6 +3,7 @@ import QtMultimedia
 import QtQuick.Controls.Material
 import QtQuick.Layouts
 import QtQuick.LocalStorage
+import QtSensors 5.7
 
 //import "./Teleprompter.qml"
 //import "./Database.qml" // Não precisa do import pois os arquivos estão no mesmo nivel

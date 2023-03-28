@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 9.0.2, 2023-03-28T09:31:19. -->
+<!-- Written by QtCreator 9.0.2, 2023-03-28T18:09:58. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -470,7 +470,7 @@
      <value type="QString">armeabi-v7a</value>
      <value type="QString">armeabi</value>
     </valuelist>
-    <value type="QString" key="AndroidDeviceSerialNumber">0072265119</value>
+    <value type="QString" key="AndroidDeviceSerialNumber">192.168.2.16:5555</value>
     <value type="int" key="AndroidVersion.ApiLevel">29</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.0">
@@ -1999,6 +1999,7 @@
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/media/pedro/arquivos/Pedro/projetos/build-teleprompter-Desktop_Qt_6_4_0_GCC_64bit-Debug</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

@@ -84,10 +84,8 @@ Item {
 
                 Rectangle {
                     id: rectItem
-                    //color: "green"
                     Layout.preferredWidth: rectTextos.width
                     Layout.preferredHeight: rectTextos.height * 10/100
-                    Layout.leftMargin: 5
 
                     MouseArea {
                         id: mouseAreaRectItem
@@ -107,10 +105,11 @@ Item {
                             id: rectTitulo
                             Layout.preferredWidth: colunaTituloTextos.width
                             Layout.preferredHeight: colunaTituloTextos.height * 60/100
-                            Text {
+                            Label {
                                 id: txtTitulo
                                 text: model.titulo
                                 font.pointSize: 30
+                                fontSizeMode: Text.Fit
                             }
                         }
 
@@ -122,6 +121,7 @@ Item {
                                 id: txtTexto
                                 text: model.texto
                                 font.pointSize: 20
+                                fontSizeMode: Text.Fit
                                 wrapMode: TextEdit.Wrap
                             }
                         }
