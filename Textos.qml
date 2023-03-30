@@ -55,94 +55,168 @@ Item {
 
         ListModel {
             id: textoModel
-            //ListElement { titulo: "Exemplo"; texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." }
+            //ListElement { titulo: "Titulo ficticio"; texto: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." }
         }
 
         Component {
-            id: textoDelegate
+            id: componenteListaTexto
 
-            ColumnLayout {
-                id: colunaPrincipal
-                anchors.fill: rectTextos
-                spacing: 0
-                z: 1
+            Rectangle {
+                width: rectTextos.width
+                height: rectTextos.height * 10/100
 
-                Popup {
-                    id: popUpEditarTexto
-                    anchors.centerIn: colunaPrincipal
-                    topMargin: rectTextos.height * 12.5/100
-                    bottomMargin: rectTextos.height * 12.5/100
-                    width: rectTextos.width * 85/100
-                    height: rectTextos.height * 85/100
-                    modal: true
-                    focus: true
-                    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-                    contentItem: PopUpEditarTextos {
-                        anchors.fill: popUpEditarTexto
-                    }
-                }
+                //required property var model;
+                property var modelo: model;
+                property int indiceModeloSelecionado: model.index
 
-                Rectangle {
-                    id: rectItem
-                    Layout.preferredWidth: rectTextos.width
-                    Layout.preferredHeight: rectTextos.height * 10/100
+                SwipeDelegate {
+                    id: swipeTextoDelegate
+                    width: parent.width
+                    height: parent.height
 
-                    MouseArea {
-                        id: mouseAreaRectItem
-                        anchors.fill: rectItem
-                        onClicked: function() {
-                            console.log(`Item clickado: titulo:${model.titulo} - texto: ${model.texto}`);
-                            popUpEditarTexto.open();
+                    Popup {
+                        id: popUpEditarTexto
+                        //anchors.centerIn: rectTextos
+                        topMargin: rectTextos.height * 12.5/100
+                        bottomMargin: rectTextos.height * 12.5/100
+                        leftMargin: (rectTextos.width * ((15/100)/2))
+                        rightMargin: (rectTextos.width * ((15/100)/2))
+                        width: rectTextos.width * 85/100
+                        height: rectTextos.height * 85/100
+                        modal: true
+                        focus: true
+                        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+                        contentItem: PopUpEditarTextos {
+                            anchors.fill: popUpEditarTexto
                         }
                     }
 
-                    ColumnLayout {
-                        id: colunaTituloTextos
-                        anchors.fill: rectItem
-                        spacing: 0
+                    onClicked: function() {
+                        popUpEditarTexto.open();
+                    }
 
-                        Rectangle {
-                            id: rectTitulo
-                            Layout.preferredWidth: colunaTituloTextos.width
-                            Layout.preferredHeight: colunaTituloTextos.height * 60/100
-                            Label {
-                                id: txtTitulo
-                                text: model.titulo
-                                font.pointSize: 30
-                                fontSizeMode: Text.Fit
+                    ListView.onRemove: SequentialAnimation {
+                        PropertyAction {
+                            target: componenteListaTexto
+                            property: "ListView.delayRemove"
+                            value: true
+                        }
+                        NumberAnimation {
+                            target: componenteListaTexto
+                            property: "height"
+                            to: 0
+                        }
+                        PropertyAction {
+                            target: componenteListaTexto
+                            property: "ListView.delayRemove"
+                            value: false
+                        }
+                    }
+
+                    swipe.left: Label {
+                        id: utilizarLabel
+                        text: "Usar no teleprompter"
+                        color: "white"
+                        verticalAlignment: Label.AlignVCenter
+                        horizontalAlignment: Label.AlignHCenter
+                        padding: 12
+                        width: parent.width
+                        height: parent.height
+
+                        SwipeDelegate.onClicked: function() {
+                            database.usarTexto(indiceModeloSelecionado);
+                        }
+
+                        background: Rectangle {
+                            color: utilizarLabel.SwipeDelegate.pressed ? "blue" : "lightblue"
+                        }
+                    }
+
+                    swipe.right: Label {
+                        id: labelDeletar
+                        text: "Deletar"
+                        color: "white"
+                        verticalAlignment: Label.AlignVCenter
+                        horizontalAlignment: Label.AlignHCenter
+                        padding: 12
+                        height: parent.height
+                        width: parent.width
+
+                        SwipeDelegate.onClicked: function() {
+                            database.deleteById(indiceModeloSelecionado);
+                            viewLista.model.remove(indiceModeloSelecionado, 1); // se remove depois do banco de dados, pois se remover antes, o item deixa de existir no model e seu indice vira -1.
+                        }
+
+                        background: Rectangle {
+                            color: labelDeletar.SwipeDelegate.pressed ? Qt.darker("tomato", 1.1) : "tomato"
+                        }
+
+                    }
+
+                    background: Rectangle {
+                        id: rectItem
+                        Layout.preferredWidth: parent.width
+                        Layout.preferredHeight: parent.height
+                        color: "#ECEFF1"
+
+                        MouseArea {
+                            id: mouseAreaRectItem
+                            anchors.fill: rectItem
+                            onClicked: function() {
+                                console.log(`Item clickado: titulo:${modelo.titulo} - texto: ${modelo.texto}`);
+                                popUpEditarTexto.open();
                             }
                         }
 
-                        Rectangle {
-                            id: rectTexto
-                            Layout.preferredWidth: colunaTituloTextos.width
-                            Layout.preferredHeight: colunaTituloTextos.height * 40/100
-                            Label {
-                                id: txtTexto
-                                text: model.texto
-                                font.pointSize: 20
-                                fontSizeMode: Text.Fit
-                                wrapMode: TextEdit.Wrap
+                        ColumnLayout {
+                            id: colunaTituloTextos
+                            anchors.fill: rectItem
+                            spacing: 0
+
+                            Rectangle {
+                                id: rectTitulo
+                                Layout.preferredWidth: colunaTituloTextos.width
+                                Layout.preferredHeight: colunaTituloTextos.height * 60/100
+                                color: "transparent"
+                                Label {
+                                    id: txtTitulo
+                                    text: modelo.titulo
+                                    font.pointSize: 30
+                                    fontSizeMode: Text.Fit
+                                }
+                                clip: true
                             }
+
+                            Rectangle {
+                                id: rectTexto
+                                Layout.preferredWidth: colunaTituloTextos.width
+                                Layout.preferredHeight: colunaTituloTextos.height * 40/100
+                                color: "transparent"
+                                Label {
+                                    id: txtTexto
+                                    text: modelo.texto
+                                    font.pointSize: 20
+                                    fontSizeMode: Text.Fit
+                                    wrapMode: TextEdit.Wrap
+                                }
+                                clip: true
+                            }
+
                         }
 
                     }
 
                 }
-
             }
 
 
-
-
         }
-
 
         ListView {
             id: viewLista
             anchors.fill: parent
             model: textoModel
-            delegate: textoDelegate
+            delegate: componenteListaTexto
             clip: true
         }
     }

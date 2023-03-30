@@ -130,6 +130,21 @@ Item {
 
     }
 
+    function deleteById(indiceNoListModel) {
+        console.log("deleteById()");
+        if( !db ) {
+            console.log("Banco de dados não iniciado");
+            return;
+        }
+
+        let indiceNoDb = ++indiceNoListModel;
+
+        db.transaction(function(tx) {
+            console.log("Deletando item pelo id: " + indiceNoDb);
+            const resultado = tx.executeSql(`DELETE FROM textos where rowid="${indiceNoDb}"`);
+        });
+    }
+
     Component.onCompleted: function() {
         //initDatabase();
         //readData(); // a se fazer apenas quando o componente Textos iniciar
