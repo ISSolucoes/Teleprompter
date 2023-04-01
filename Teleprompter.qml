@@ -53,7 +53,7 @@ Item {
         interval: 100
         triggeredOnStart: false; repeat: true; running: false
         onTriggered: function() {
-            posicaoBarraDeRolagem += 0.005; // Lembre-se de dinamizar o incremento de position da scrollBar
+            posicaoBarraDeRolagem += 0.0025; // Lembre-se de dinamizar o incremento de position da scrollBar
             console.log("Size: " + scrollViewTextAreaTeleprompter.ScrollBar.vertical.size);
             console.log("posicaoBarraDeRolagem: " + posicaoBarraDeRolagem);
             if( posicaoBarraDeRolagem >= (1.0 - scrollViewTextAreaTeleprompter.ScrollBar.vertical.size) ) {

@@ -44,7 +44,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.minimumHeight: rectPopUpCriarTexto.height * 10/100
 
-                Button {
+                /*Button {
                     id: btnUsarTexto
                     anchors {
                         left: rectLinhaBtns.left
@@ -65,7 +65,7 @@ Item {
                         popUpCriarTexto.close();
 
                     }
-                }
+                }*/
 
                 Button {
                     id: btnAdicionar
@@ -80,10 +80,11 @@ Item {
                     onClicked: function adicionaTexto() {
                         let titulo = textAreaTitulo.text;
                         let texto = textAreaTexto.text;
-                        let JS_OBJ_texto = { titulo: titulo, texto: texto };
+                        let JS_OBJ_texto = { titulo: titulo, texto: texto, rowid: 0 };
 
+                        let id = database.storeData(JS_OBJ_texto);
+                        JS_OBJ_texto.rowid = id;
                         textoModel.append(JS_OBJ_texto);
-                        database.storeData(JS_OBJ_texto);
 
                         textAreaTitulo.text = "";
                         textAreaTexto.text = "";

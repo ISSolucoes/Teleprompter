@@ -49,7 +49,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.minimumHeight: rectPopUpEditarTexto.height * 10/100
 
-                Button {
+                /*Button {
                     id: btnUsarTexto
                     anchors {
                         left: rectLinhaBtns.left
@@ -67,7 +67,7 @@ Item {
                         popUpEditarTexto.close();
 
                     }
-                }
+                }*/
 
                 Button {
                     id: btnEditar
@@ -83,15 +83,19 @@ Item {
 
                         let titulo = textAreaTitulo.text;
                         let texto = textAreaTexto.text;
-                        let JS_OBJ_texto = { titulo: titulo, texto: texto };
+                        let JS_OBJ_texto = { titulo: titulo, texto: texto, rowid: model.rowid };
 
-                        let indiceNoListModel = model.index;
+                        // ------- a variável indiceNoListModel atualiza para -1 ao fazer a operação de "remove()", por isso armazena-la ------
+                        let indiceParaRemover = indiceNoListModel;
+                        let indiceParaInserir = indiceNoListModel;
+                        // --------------------------------------------------------------------------------------------------------------------
 
-                        database.updateData(indiceNoListModel, JS_OBJ_texto);
-                        textoModel.remove(indiceNoListModel, 1);
-                        textoModel.insert(indiceNoListModel, JS_OBJ_texto);
+                        database.updateData(model.rowid, JS_OBJ_texto);
+                        textoModel.remove(indiceParaRemover, 1);
+                        textoModel.insert(indiceParaInserir, JS_OBJ_texto);
 
                         popUpEditarTexto.close();
+
                     }
                 }
 

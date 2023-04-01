@@ -17,6 +17,7 @@ Item {
 
     function storeData(textoASerSalvo) {
         console.log("storeData()");
+        let insertedID = 0;
 
         if( !db ) {
             console.log("Banco de dados não iniciado!");
@@ -26,10 +27,14 @@ Item {
         db.transaction(function(tx){
             console.log("Salvando item na tabela textos");
             let resultado = tx.executeSql('INSERT INTO textos (titulo, texto, isUsed) VALUES (?,?,?)', [textoASerSalvo.titulo, textoASerSalvo.texto, 0]);
+            //console.log(JSON.stringify(resultado));
+            insertedID = Number(resultado["insertId"]); // Antes não retornava o valor pela forma como era passado: "resultado.insertId"
         });
+
+        return insertedID;
     }
 
-    function updateData(indiceNoListModel, textoASerSalvo) {
+    function updateData(indiceNoBD, textoASerSalvo) {
         console.log("updateData()");
 
         if( !db ) {
@@ -37,7 +42,7 @@ Item {
             return;
         }
 
-        let indiceNoBD = ++indiceNoListModel; // o indice no ListModel começa pelo 0. Já no DB, o id se inicia pelo 1. Incrementamos uma vez para alinhar
+        //let indiceNoBD = ++indiceNoListModel; // o indice no ListModel começa pelo 0. Já no DB, o id se inicia pelo 1. Incrementamos uma vez para alinhar
         // o item na View com o item no banco.
 
         db.transaction(function(tx){
@@ -47,15 +52,13 @@ Item {
         });
     }
 
-    function usarTexto(indiceNoListModel) {
+    function usarTexto(indiceNoBD) {
         console.log("usarTexto()");
 
         if( !db ) {
             console.log("Banco de dados não iniciado");
             return;
         }
-
-        let indiceNoBD = ++indiceNoListModel;
 
         db.transaction(function(tx){
             console.log(`Atualizando item na tabela textos pelo indice no banco: ${indiceNoBD}. Para ser usado no teleprompter`);
@@ -99,13 +102,14 @@ Item {
         }
 
         db.transaction(function(tx) {
-            console.log(`Lendo textos do banco "Textos", na tabela "textos"`);
-            const resultado = tx.executeSql('select * from textos');
+            console.log(`Lendo textos do banco "Textos", na tabela "textos"`);            
+            const resultado = tx.executeSql('select rowid,titulo,texto,isUsed FROM textos'); // fazer um select específico, traz todos os campos pedidos
             let linhas = resultado.rows;
             if( linhas.length === 0 ) {
                 console.log("Nenhum dado na tabela");
             } else if( linhas.length >= 1 ) {
                 console.log("No minimo um dado na tabela");
+                //console.log(JSON.stringify(resultado));
 
                 for(let indice = 0; indice < linhas.length; indice++) {
                     const objetoTexto = linhas[indice];
@@ -130,18 +134,16 @@ Item {
 
     }
 
-    function deleteById(indiceNoListModel) {
+    function deleteById(indiceNoDB) {
         console.log("deleteById()");
         if( !db ) {
             console.log("Banco de dados não iniciado");
             return;
         }
 
-        let indiceNoDb = ++indiceNoListModel;
-
         db.transaction(function(tx) {
-            console.log("Deletando item pelo id: " + indiceNoDb);
-            const resultado = tx.executeSql(`DELETE FROM textos where rowid="${indiceNoDb}"`);
+            console.log("Deletando item pelo id: " + indiceNoDB);
+            const resultado = tx.executeSql(`DELETE FROM textos where rowid="${indiceNoDB}"`);
         });
     }
 

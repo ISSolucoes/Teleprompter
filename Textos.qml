@@ -11,6 +11,7 @@ Item {
         database.initDatabase();
         //database.deleteAll();
         let textos = database.readData();
+
         for(let indice = 0; indice < textos.length; indice++) {
             textoModel.append(textos[indice]);
         }
@@ -67,7 +68,8 @@ Item {
 
                 //required property var model;
                 property var modelo: model;
-                property int indiceModeloSelecionado: model.index
+                //property int IDSelecionado: model.rowid
+                property int indiceNoListModel: model.index
 
                 SwipeDelegate {
                     id: swipeTextoDelegate
@@ -124,7 +126,8 @@ Item {
                         height: parent.height
 
                         SwipeDelegate.onClicked: function() {
-                            database.usarTexto(indiceModeloSelecionado);
+                            console.log(`id do item no db: ${model.rowid}`);
+                            database.usarTexto(model.rowid);
                         }
 
                         background: Rectangle {
@@ -143,8 +146,8 @@ Item {
                         width: parent.width
 
                         SwipeDelegate.onClicked: function() {
-                            database.deleteById(indiceModeloSelecionado);
-                            viewLista.model.remove(indiceModeloSelecionado, 1); // se remove depois do banco de dados, pois se remover antes, o item deixa de existir no model e seu indice vira -1.
+                            database.deleteById(model.rowid);
+                            viewLista.model.remove(indiceNoListModel, 1); // se remove depois do banco de dados, pois se remover antes, o item deixa de existir no model e seu indice vira -1.
                         }
 
                         background: Rectangle {
