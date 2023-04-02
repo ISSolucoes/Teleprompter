@@ -132,6 +132,7 @@ Item {
                         SwipeDelegate.onClicked: function() {
                             console.log(`id do item no db: ${model.rowid}`);
                             database.usarTexto(model.rowid);
+                            model.isUsed = 1;
                             swipe.close();
                         }
 
@@ -153,7 +154,15 @@ Item {
 
                         SwipeDelegate.onClicked: function() {
                             database.deleteById(model.rowid);
+
+                            // limpando texto, para sumir o retangulo de texto na aba teleprompter, se o texto excluido for o texto usado na aba teleprompter(isUsed)
+                            //console.log(JSON.stringify(model.isUsed))
+                            if( Number(model.isUsed) === 1 ) {
+                                textoTeleprompterTabPrincipal = "";
+                            }
+
                             viewLista.model.remove(indiceNoListModel, 1); // se remove depois do banco de dados, pois se remover antes, o item deixa de existir no model e seu indice vira -1.
+
                         }
                     }
 
