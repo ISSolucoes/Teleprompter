@@ -24,6 +24,24 @@ ApplicationWindow {
         }
     }
 
+    header: ToolBar {
+        id: toolBar
+        position: ToolBar.Header
+        RowLayout {
+            id: linhaToolBar
+            anchors.fill: parent
+            Label {
+                id: tituloToolBar
+                text: "Teleprompter"
+                font.pointSize: 23
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+                Layout.fillWidth: true
+            }
+        }
+
+    }
+
     footer: TabBar {
         id: tabBar
         TabButton {

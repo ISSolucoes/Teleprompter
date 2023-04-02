@@ -98,6 +98,7 @@ Item {
                     }
 
                     ListView.onRemove: SequentialAnimation {
+                        id: removeAnimationDelete
                         PropertyAction {
                             target: componenteListaTexto
                             property: "ListView.delayRemove"
@@ -115,6 +116,11 @@ Item {
                         }
                     }
 
+                    /*ListView.onRemove: SequentialAnimation {
+                        id: removeAnimationUtilizar
+
+                    } */
+
                     swipe.left: Label {
                         id: utilizarLabel
                         text: "Usar no teleprompter"
@@ -128,6 +134,7 @@ Item {
                         SwipeDelegate.onClicked: function() {
                             console.log(`id do item no db: ${model.rowid}`);
                             database.usarTexto(model.rowid);
+                            swipe.close();
                         }
 
                         background: Rectangle {
