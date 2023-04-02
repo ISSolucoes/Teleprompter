@@ -116,19 +116,18 @@ Item {
                         }
                     }
 
-                    /*ListView.onRemove: SequentialAnimation {
-                        id: removeAnimationUtilizar
-
-                    } */
-
-                    swipe.left: Button {
-                        id: utilizarButton
+                    swipe.left: Rectangle {
+                        id: retanguloUtilizar
                         width: parent.width * 30/100
                         height: parent.height
-                        icon.name: "done"
-                        icon.source: "qrc:Imagens/Icones/done.png"
+                        anchors.left: parent.left
+                        color: retanguloUtilizar.SwipeDelegate.pressed ? "lightblue" : "lightgreen"
 
-                        padding: 0
+                        Image {
+                            id: iconeUtilizar
+                            anchors.centerIn: parent
+                            source: "qrc:Imagens/Icones/done.png"
+                        }
 
                         SwipeDelegate.onClicked: function() {
                             console.log(`id do item no db: ${model.rowid}`);
@@ -137,68 +136,26 @@ Item {
                         }
 
                     }
-                    /*Label {
-                        id: utilizarLabel
-                        //text: "Usar no teleprompter"
-                        color: "transparent"
-                        verticalAlignment: Label.AlignVCenter
-                        horizontalAlignment: Label.AlignHCenter
-                        padding: 12
-                        width: parent.width * 30/100
-                        height: parent.height
 
-                        SwipeDelegate.onClicked: function() {
-                            console.log(`id do item no db: ${model.rowid}`);
-                            database.usarTexto(model.rowid);
-                            swipe.close();
-                        }
-
-                        background: Rectangle {
-                            Button {
-                                anchors.fill: parent
-                                anchors.centerIn: parent
-                                icon.name: "done"
-                                icon.source: "qrc:Imagens/Icones/done.png"
-                            }
-                            color: utilizarLabel.SwipeDelegate.pressed ? "transparent" : "transparent"
-                        }
-                    }*/
-
-                    swipe.right: Button {
-                        id: deletarButton
+                    swipe.right: Rectangle {
+                        id: retanguloDeletar
                         width: parent.width * 30/100
                         height: parent.height
                         anchors.right: parent.right
-                        icon.name: "delete"
-                        icon.source: "qrc:Imagens/Icones/delete.png"
+                        color: retanguloDeletar.SwipeDelegate.pressed ? "tomato" : "#F44336"
+
+                        Image {
+                            id: iconeDelete
+                            anchors.centerIn: parent
+                            source: "qrc:Imagens/Icones/delete.png"
+
+                        }
 
                         SwipeDelegate.onClicked: function() {
                             database.deleteById(model.rowid);
                             viewLista.model.remove(indiceNoListModel, 1); // se remove depois do banco de dados, pois se remover antes, o item deixa de existir no model e seu indice vira -1.
                         }
-
                     }
-
-                    /*Label {
-                        id: labelDeletar
-                        text: "Deletar"
-                        color: "white"
-                        verticalAlignment: Label.AlignVCenter
-                        horizontalAlignment: Label.AlignHCenter
-                        padding: 12
-                        height: parent.height
-                        width: parent.width
-
-                        SwipeDelegate.onClicked: function() {
-                            database.deleteById(model.rowid);
-                            viewLista.model.remove(indiceNoListModel, 1); // se remove depois do banco de dados, pois se remover antes, o item deixa de existir no model e seu indice vira -1.
-                        }
-
-                        background: Rectangle {
-                            color: labelDeletar.SwipeDelegate.pressed ? Qt.darker("tomato", 1.1) : "tomato"
-                        }
-
-                    }*/
 
                     background: Rectangle {
                         id: rectItem
