@@ -121,14 +121,30 @@ Item {
 
                     } */
 
-                    swipe.left: Label {
+                    swipe.left: Button {
+                        id: utilizarButton
+                        width: parent.width * 30/100
+                        height: parent.height
+                        icon.name: "done"
+                        icon.source: "qrc:Imagens/Icones/done.png"
+
+                        padding: 0
+
+                        SwipeDelegate.onClicked: function() {
+                            console.log(`id do item no db: ${model.rowid}`);
+                            database.usarTexto(model.rowid);
+                            swipe.close();
+                        }
+
+                    }
+                    /*Label {
                         id: utilizarLabel
-                        text: "Usar no teleprompter"
-                        color: "white"
+                        //text: "Usar no teleprompter"
+                        color: "transparent"
                         verticalAlignment: Label.AlignVCenter
                         horizontalAlignment: Label.AlignHCenter
                         padding: 12
-                        width: parent.width
+                        width: parent.width * 30/100
                         height: parent.height
 
                         SwipeDelegate.onClicked: function() {
@@ -138,11 +154,32 @@ Item {
                         }
 
                         background: Rectangle {
-                            color: utilizarLabel.SwipeDelegate.pressed ? "blue" : "lightblue"
+                            Button {
+                                anchors.fill: parent
+                                anchors.centerIn: parent
+                                icon.name: "done"
+                                icon.source: "qrc:Imagens/Icones/done.png"
+                            }
+                            color: utilizarLabel.SwipeDelegate.pressed ? "transparent" : "transparent"
                         }
+                    }*/
+
+                    swipe.right: Button {
+                        id: deletarButton
+                        width: parent.width * 30/100
+                        height: parent.height
+                        anchors.right: parent.right
+                        icon.name: "delete"
+                        icon.source: "qrc:Imagens/Icones/delete.png"
+
+                        SwipeDelegate.onClicked: function() {
+                            database.deleteById(model.rowid);
+                            viewLista.model.remove(indiceNoListModel, 1); // se remove depois do banco de dados, pois se remover antes, o item deixa de existir no model e seu indice vira -1.
+                        }
+
                     }
 
-                    swipe.right: Label {
+                    /*Label {
                         id: labelDeletar
                         text: "Deletar"
                         color: "white"
@@ -161,7 +198,7 @@ Item {
                             color: labelDeletar.SwipeDelegate.pressed ? Qt.darker("tomato", 1.1) : "tomato"
                         }
 
-                    }
+                    }*/
 
                     background: Rectangle {
                         id: rectItem

@@ -7,5 +7,7 @@
         <file>Imagens/Icones/playCircle.png</file>
         <file>Imagens/Icones/stopCircle.png</file>
         <file>Imagens/Icones/vel.png</file>
+        <file>Imagens/Icones/done.png</file>
+        <file>Imagens/Icones/delete.png</file>
     </qresource>
 </RCC>
