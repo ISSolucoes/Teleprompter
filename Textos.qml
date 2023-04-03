@@ -64,7 +64,6 @@ Item {
                 width: rectTextos.width
                 height: rectTextos.height * 10/100
 
-
                 //required property var model;
                 property var modelo: model;
                 //property int IDSelecionado: model.rowid
@@ -233,6 +232,7 @@ Item {
         ListView {
             id: viewLista
             anchors.fill: parent
+            spacing: 2
             model: textoModel
             delegate: componenteListaTexto
             clip: true
