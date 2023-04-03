@@ -1,13 +1,15 @@
 <RCC>
     <qresource prefix="/">
         <file>Imagens/Icones/add_texto.png</file>
-        <file>Imagens/Icones/texto.png</file>
-        <file>Imagens/Icones/video.png</file>
         <file>Imagens/Icones/cameraSwitch.png</file>
+        <file>Imagens/Icones/checkCircle.png</file>
+        <file>Imagens/Icones/delete.png</file>
+        <file>Imagens/Icones/deleteSweep.png</file>
+        <file>Imagens/Icones/done.png</file>
         <file>Imagens/Icones/playCircle.png</file>
         <file>Imagens/Icones/stopCircle.png</file>
+        <file>Imagens/Icones/texto.png</file>
         <file>Imagens/Icones/vel.png</file>
-        <file>Imagens/Icones/done.png</file>
-        <file>Imagens/Icones/delete.png</file>
+        <file>Imagens/Icones/video.png</file>
     </qresource>
 </RCC>

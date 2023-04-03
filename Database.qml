@@ -102,7 +102,7 @@ Item {
         }
 
         db.transaction(function(tx) {
-            console.log(`Lendo textos do banco "Textos", na tabela "textos"`);            
+            console.log(`Lendo textos do banco "Textos", na tabela "textos"`);
             const resultado = tx.executeSql('select rowid,titulo,texto,isUsed FROM textos'); // fazer um select específico, traz todos os campos pedidos
             let linhas = resultado.rows;
             if( linhas.length === 0 ) {

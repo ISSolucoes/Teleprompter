@@ -18,7 +18,7 @@ Item {
                 id: textAreaTitulo
                 Layout.alignment: Qt.AlignLeft
                 anchors.top: colunaAdcDados.top
-                anchors.topMargin: 2
+                anchors.topMargin: 10
                 anchors.leftMargin: 2
                 font.pointSize: 25
                 placeholderText: qsTr("Titulo")
@@ -43,29 +43,6 @@ Item {
                 id: rectLinhaBtns
                 Layout.fillWidth: true
                 Layout.minimumHeight: rectPopUpCriarTexto.height * 10/100
-
-                /*Button {
-                    id: btnUsarTexto
-                    anchors {
-                        left: rectLinhaBtns.left
-                        leftMargin: 10
-                        bottomMargin: 0
-                    }
-
-                    Material.background: Material.Grey
-                    text: qsTr("Usar texto")
-                    onClicked: function usarTexto() {
-
-                        let indiceNoListModel = model.index;
-                        database.usarTexto(indiceNoListModel);
-
-                        textAreaTitulo.text = "";
-                        textAreaTexto.text = "";
-
-                        popUpCriarTexto.close();
-
-                    }
-                }*/
 
                 Button {
                     id: btnAdicionar

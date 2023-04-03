@@ -8,8 +8,6 @@ Item {
     property real posicaoBarraDeRolagem: 0.0
     property int cameraEscolhida: 1
 
-    antialiasing: true
-
     // ----------------------------------------  VIDEO Components -----------------------------------------
     MediaDevices {
         id: mediaDevices
@@ -26,6 +24,7 @@ Item {
         videoOutput: videoOutput
         camera: Camera {
             id: camera
+            active: true
             focusMode: Camera.FocusModeAutoNear
             cameraDevice: mediaDevices.videoInputs[cameraEscolhida]
         }
@@ -220,7 +219,6 @@ Item {
                 //Material.background: "white"
                 icon.name: "vel"
                 icon.source: "qrc:Imagens/Icones/vel.png"
-                antialiasing: true
                 scale: 1.35
                 onClicked: function() {
                     console.log("Botão velocidade de texto clickado");

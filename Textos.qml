@@ -5,8 +5,6 @@ import QtQuick.Controls.Material
 Item {
     id: itemTextos
 
-    antialiasing: true
-
     Component.onCompleted: function() {
         database.initDatabase();
         //database.deleteAll();
@@ -66,15 +64,21 @@ Item {
                 width: rectTextos.width
                 height: rectTextos.height * 10/100
 
+
                 //required property var model;
                 property var modelo: model;
                 //property int IDSelecionado: model.rowid
                 property int indiceNoListModel: model.index
+                property var ponteiroParaSwipe; // Necessário pois a variável swipe não está visivel dentro do componente de swipe.left
 
                 SwipeDelegate {
                     id: swipeTextoDelegate
                     width: parent.width
                     height: parent.height
+
+                    Component.onCompleted: function() {
+                        ponteiroParaSwipe = swipe;
+                    }
 
                     Popup {
                         id: popUpEditarTexto
@@ -116,6 +120,7 @@ Item {
                         }
                     }
 
+                    // Dentro do componente de swipe.left, a variável swipe deixa de estar visivel
                     swipe.left: Rectangle {
                         id: retanguloUtilizar
                         width: parent.width * 30/100
@@ -133,7 +138,7 @@ Item {
                             console.log(`id do item no db: ${model.rowid}`);
                             database.usarTexto(model.rowid);
                             model.isUsed = 1;
-                            swipe.close();
+                            ponteiroParaSwipe.close();
                         }
 
                     }
