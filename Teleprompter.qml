@@ -71,7 +71,7 @@ Item {
         x: (teleprompterTab.width * 5/100)/2
         color: "transparent"
         border.width: 15
-        border.color: "#2196F3"
+        border.color: "#5cb2f7"
         radius: 10
         //anchors.horizontalCenter: parent.horizontalCenter
         visible: textAreaTeleprompter.contentWidth > 0 ? true : false
@@ -88,10 +88,10 @@ Item {
             drag.minimumX: 0
             drag.axis: Drag.XAndYAxis
             onPressed: function() {
-                retanguloTexto.border.color = "#FFC107";
+                retanguloTexto.border.color = "#2196F3";
             }
             onReleased: function() {
-                retanguloTexto.border.color = "#2196F3";
+                retanguloTexto.border.color = "#5cb2f7";
             }
         }
 
@@ -142,7 +142,8 @@ Item {
     Rectangle {
         id: rectEspacoBotoesGravacao
         width: teleprompterTab.width
-        height: teleprompterTab.height * 10/100
+        //height: teleprompterTab.height * 10/100
+        implicitHeight: recordButton.height + (recordButton.height * 20/100)
         anchors.bottom: parent.bottom
         color: "black"
         opacity: 1
@@ -161,7 +162,7 @@ Item {
                 icon.name: "cameraSwitch"
                 icon.source: "qrc:Imagens/Icones/cameraSwitch.png"
                 antialiasing: true
-                scale: 1.35
+                scale: 1.25
                 onClicked: function() {
                     if( cameraEscolhida === 1 ) {
                         cameraEscolhida = 0;
@@ -181,7 +182,7 @@ Item {
                 icon.name: "playCircle"
                 icon.source: "qrc:Imagens/Icones/playCircle.png"
                 antialiasing: true
-                scale: 1.6
+                scale: 1.4
                 onClicked: function() {
                     if( bandeiraIconPlay ) {
                         recordButton.icon.source = "qrc:Imagens/Icones/stopCircle.png";
@@ -219,7 +220,7 @@ Item {
                 //Material.background: "white"
                 icon.name: "vel"
                 icon.source: "qrc:Imagens/Icones/vel.png"
-                scale: 1.35
+                scale: 1.25
                 onClicked: function() {
                     console.log("Botão velocidade de texto clickado");
                 }

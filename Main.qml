@@ -7,9 +7,12 @@ import QtQuick.LocalStorage
 ApplicationWindow {
     id: root
     visible: true
+    /*minimumWidth: 250
+    minimumHeight: 500*/
     title: qsTr("Teleprompter")
     color: "black"
     Material.accent: Material.Blue
+    Material.primary: Material.Blue
 
     property string textoTeleprompterTabPrincipal: "";
 

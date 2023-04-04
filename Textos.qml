@@ -60,9 +60,11 @@ Item {
         Component {
             id: componenteListaTexto
 
-            Rectangle {
+            Pane {
                 width: rectTextos.width
                 height: rectTextos.height * 10/100
+                Material.elevation: 5
+                padding: 0
 
                 //required property var model;
                 property var modelo: model;
@@ -172,9 +174,9 @@ Item {
 
                     background: Rectangle {
                         id: rectItem
-                        Layout.preferredWidth: parent.width
-                        Layout.preferredHeight: parent.height
-                        color: "#ECEFF1"
+                        Layout.minimumWidth: parent.width
+                        Layout.minimumHeight: parent.height
+                        color: "white"
 
                         MouseArea {
                             id: mouseAreaRectItem
@@ -192,8 +194,14 @@ Item {
 
                             Rectangle {
                                 id: rectTitulo
-                                Layout.preferredWidth: colunaTituloTextos.width
-                                Layout.preferredHeight: colunaTituloTextos.height * 60/100
+                                Layout.minimumWidth: colunaTituloTextos.width
+                                Layout.minimumHeight: colunaTituloTextos.height * 60/100
+                                anchors {
+                                    leftMargin: 0
+                                    topMargin: 0
+                                    rightMargin: 0
+                                    bottomMargin: 0
+                                }
                                 color: "transparent"
                                 Label {
                                     id: txtTitulo
@@ -206,8 +214,14 @@ Item {
 
                             Rectangle {
                                 id: rectTexto
-                                Layout.preferredWidth: colunaTituloTextos.width
-                                Layout.preferredHeight: colunaTituloTextos.height * 40/100
+                                Layout.minimumWidth: colunaTituloTextos.width
+                                Layout.minimumHeight: colunaTituloTextos.height * 40/100
+                                anchors {
+                                    leftMargin: 0
+                                    topMargin: 0
+                                    rightMargin: 0
+                                    bottomMargin: 0
+                                }
                                 color: "transparent"
                                 Label {
                                     id: txtTexto
@@ -232,7 +246,7 @@ Item {
         ListView {
             id: viewLista
             anchors.fill: parent
-            spacing: 2
+            spacing: 3
             model: textoModel
             delegate: componenteListaTexto
             clip: true
