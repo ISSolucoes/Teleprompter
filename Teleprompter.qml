@@ -7,6 +7,10 @@ Item {
 
     property real posicaoBarraDeRolagem: 0.0
     property int cameraEscolhida: 1
+    property real referenciaIncrementoPosicaoBarraRolagem: 0.0025
+    property real incrementoPosicaoBarraDeRolagem: referenciaIncrementoPosicaoBarraRolagem
+    //property real ref_intervalTimer: 100
+    //property real intervalTimer: ref_intervalTimer
 
     // ----------------------------------------  VIDEO Components -----------------------------------------
     MediaDevices {
@@ -52,7 +56,7 @@ Item {
         interval: 100
         triggeredOnStart: false; repeat: true; running: false
         onTriggered: function() {
-            posicaoBarraDeRolagem += 0.0025; // Lembre-se de dinamizar o incremento de position da scrollBar
+            posicaoBarraDeRolagem += incrementoPosicaoBarraDeRolagem; // Lembre-se de dinamizar o incremento de position da scrollBar
             console.log("Size: " + scrollViewTextAreaTeleprompter.ScrollBar.vertical.size);
             console.log("posicaoBarraDeRolagem: " + posicaoBarraDeRolagem);
             if( posicaoBarraDeRolagem >= (1.0 - scrollViewTextAreaTeleprompter.ScrollBar.vertical.size) ) {
@@ -220,9 +224,23 @@ Item {
                 //Material.background: "white"
                 icon.name: "vel"
                 icon.source: "qrc:Imagens/Icones/vel.png"
+                text: "1x"
                 scale: 1.25
                 onClicked: function() {
                     console.log("Botão velocidade de texto clickado");
+                    if( incrementoPosicaoBarraDeRolagem === referenciaIncrementoPosicaoBarraRolagem ) {
+                        console.log("1x para 1.5x");
+                        incrementoPosicaoBarraDeRolagem = referenciaIncrementoPosicaoBarraRolagem * 1.5;
+                        mudarVelocidadeTextoButton.text = "1.5x";
+                    } else if( incrementoPosicaoBarraDeRolagem === (referenciaIncrementoPosicaoBarraRolagem * 1.5) ) {
+                        console.log(`1.5x para 2x`);
+                        incrementoPosicaoBarraDeRolagem = referenciaIncrementoPosicaoBarraRolagem * 2;
+                        mudarVelocidadeTextoButton.text = "2x";
+                    } else if( incrementoPosicaoBarraDeRolagem === (referenciaIncrementoPosicaoBarraRolagem * 2) ) {
+                        console.log(`2x para 1x`);
+                        incrementoPosicaoBarraDeRolagem = referenciaIncrementoPosicaoBarraRolagem;
+                        mudarVelocidadeTextoButton.text = "1x";
+                    }
                 }
             }
         }
