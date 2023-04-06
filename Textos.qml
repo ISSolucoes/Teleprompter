@@ -60,11 +60,13 @@ Item {
         Component {
             id: componenteListaTexto
 
-            Pane {
+            Rectangle {
+                id: rectItemPai
                 width: rectTextos.width
                 height: rectTextos.height * 10/100
-                Material.elevation: 5
-                padding: 0
+                //Material.elevation: 5
+                //padding: 0
+                radius: 15
 
                 //required property var model;
                 property var modelo: model;
@@ -128,6 +130,7 @@ Item {
                         height: parent.height
                         anchors.left: parent.left
                         color: retanguloUtilizar.SwipeDelegate.pressed ? "lightblue" : "lightgreen"
+                        radius: 10
 
                         Image {
                             id: iconeUtilizar
@@ -150,6 +153,7 @@ Item {
                         height: parent.height
                         anchors.right: parent.right
                         color: retanguloDeletar.SwipeDelegate.pressed ? "tomato" : "#F44336"
+                        radius: 10
 
                         Image {
                             id: iconeDelete
@@ -174,9 +178,11 @@ Item {
 
                     background: Rectangle {
                         id: rectItem
-                        Layout.minimumWidth: parent.width
-                        Layout.minimumHeight: parent.height
-                        color: "white"
+                        /*Layout.minimumWidth: parent.width
+                        Layout.minimumHeight: parent.height*/
+                        anchors.fill: rectItemPai
+                        radius: rectItemPai.radius // Sem esta propriedade o rectItem passa as bordas do rectItemPai
+                        color: "#E0E0E0"
 
                         MouseArea {
                             id: mouseAreaRectItem
@@ -247,6 +253,7 @@ Item {
             id: viewLista
             anchors.fill: parent
             spacing: 3
+            topMargin: 3
             model: textoModel
             delegate: componenteListaTexto
             clip: true
