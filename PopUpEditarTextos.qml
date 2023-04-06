@@ -12,15 +12,15 @@ Item {
         clip: true
 
         Component.onCompleted: function() {
-            textAreaTitulo.text = model.titulo;
-            textAreaTexto.text = model.texto;
+            textAreaTituloEditar.text = model.titulo;
+            textAreaTextoEditar.text = model.texto;
         }
 
         ColumnLayout {
             id: colunaEdtDados
             anchors.fill: rectPopUpEditarTexto
             TextArea {
-                id: textAreaTitulo
+                id: textAreaTituloEditar
                 Layout.alignment: Qt.AlignLeft
                 anchors.top: colunaEdtDados.top
                 anchors.topMargin: 10
@@ -28,21 +28,32 @@ Item {
                 font.pointSize: 35
                 placeholderText: qsTr("Titulo")
                 Layout.fillWidth: true
-                Layout.preferredHeight: rectPopUpEditarTexto.height * 20/100
+                Layout.minimumHeight: rectPopUpEditarTexto.height * 20/100
+                Layout.maximumHeight: rectPopUpEditarTexto.height * 20/100
                 wrapMode: TextEdit.Wrap
             }
-            TextArea {
-                id: textAreaTexto
-                Layout.alignment: Qt.AlignLeft
-                anchors.top: textAreaTitulo.bottom
-                anchors.topMargin: 10
-                anchors.leftMargin: 2
-                font.pointSize: 20
-                placeholderText: qsTr("texto")
+
+            ScrollView {
+                id: scrollViewTextAreaTextoEditar
                 Layout.fillWidth: true
                 Layout.minimumHeight: rectPopUpEditarTexto.height * 60/100
-                wrapMode: TextEdit.Wrap
+                Layout.maximumHeight: rectPopUpEditarTexto.height * 60/100
+
+                TextArea {
+                    id: textAreaTextoEditar
+                    Layout.alignment: Qt.AlignLeft
+                    anchors.top: textAreaTituloEditar.bottom
+                    anchors.topMargin: 10
+                    anchors.leftMargin: 2
+                    font.pointSize: 20
+                    placeholderText: qsTr("texto")
+                    Layout.fillWidth: true
+                    Layout.minimumHeight: rectPopUpEditarTexto.height * 60/100
+                    Layout.maximumHeight: rectPopUpEditarTexto.height * 60/100
+                    wrapMode: TextEdit.Wrap
+                }
             }
+
 
             Rectangle {
                 id: rectLinhaBtns
@@ -61,8 +72,8 @@ Item {
                     text: qsTr("Editar texto")
                     onClicked: function editaTexto() {
 
-                        let titulo = textAreaTitulo.text;
-                        let texto = textAreaTexto.text;
+                        let titulo = textAreaTituloEditar.text;
+                        let texto = textAreaTextoEditar.text;
                         let JS_OBJ_texto = { titulo: titulo, texto: texto, rowid: model.rowid };
 
                         // ------- a variável indiceNoListModel atualiza para -1 ao fazer a operação de "remove()", por isso armazena-la ------
