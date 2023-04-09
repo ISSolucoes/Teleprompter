@@ -36,20 +36,20 @@ Item {
             ScrollView {
                 id: scrollViewTextAreaTextoEditar
                 Layout.fillWidth: true
+                anchors.topMargin: 10
                 Layout.minimumHeight: rectPopUpEditarTexto.height * 60/100
                 Layout.maximumHeight: rectPopUpEditarTexto.height * 60/100
 
                 TextArea {
                     id: textAreaTextoEditar
                     Layout.alignment: Qt.AlignLeft
-                    anchors.top: textAreaTituloEditar.bottom
                     anchors.topMargin: 10
                     anchors.leftMargin: 2
                     font.pointSize: 20
-                    placeholderText: qsTr("texto")
+                    placeholderText: qsTr("Texto")
                     Layout.fillWidth: true
-                    Layout.minimumHeight: rectPopUpEditarTexto.height * 60/100
-                    Layout.maximumHeight: rectPopUpEditarTexto.height * 60/100
+                    Layout.minimumHeight: rectPopUpEditarTexto.height * 55/100
+                    Layout.maximumHeight: rectPopUpEditarTexto.height * 55/100
                     wrapMode: TextEdit.Wrap
                 }
             }

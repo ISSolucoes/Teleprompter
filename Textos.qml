@@ -18,6 +18,7 @@ Item {
     Rectangle {
         id: rectTextos
         anchors.fill: itemTextos
+        color: "#EEEEEE"
 
         RoundButton {
             id: btnAddTexto
@@ -182,7 +183,7 @@ Item {
                         Layout.minimumHeight: parent.height*/
                         anchors.fill: rectItemPai
                         radius: rectItemPai.radius // Sem esta propriedade o rectItem passa as bordas do rectItemPai
-                        color: "#E0E0E0"
+                        color: "white"
 
                         MouseArea {
                             id: mouseAreaRectItem
