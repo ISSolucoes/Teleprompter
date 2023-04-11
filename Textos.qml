@@ -75,6 +75,27 @@ Item {
                 property int indiceNoListModel: model.index
                 property var ponteiroParaSwipe; // Necessário pois a variável swipe não está visivel dentro do componente de swipe.left
 
+                /*ListView.onRemove: NumberAnimation {
+                    target: rectItemPai
+                    property: "height"
+                    duration: 3000
+                    to: 0
+                }*/
+
+
+                NumberAnimation {
+                    id: animacaoRemoveItem
+                    running: false
+                    targets: [rectItemPai, swipeTextoDelegate]
+                    property: "height"
+                    to: 0
+                    duration: 1000
+                    easing.type: Easing.InOutQuad
+                    onFinished: function removeItemListModel() {
+                        viewLista.model.remove(indiceNoListModel, 1);
+                    }
+                }
+
                 SwipeDelegate {
                     id: swipeTextoDelegate
                     width: parent.width
@@ -105,7 +126,8 @@ Item {
                         popUpEditarTexto.open();
                     }
 
-                    ListView.onRemove: SequentialAnimation {
+
+                    /*SequentialAnimation {
                         id: removeAnimationDelete
                         PropertyAction {
                             target: componenteListaTexto
@@ -115,6 +137,7 @@ Item {
                         NumberAnimation {
                             target: componenteListaTexto
                             property: "height"
+                            duration: 3000
                             to: 0
                         }
                         PropertyAction {
@@ -122,7 +145,7 @@ Item {
                             property: "ListView.delayRemove"
                             value: false
                         }
-                    }
+                    }*/
 
                     // Dentro do componente de swipe.left, a variável swipe deixa de estar visivel
                     swipe.left: Rectangle {
@@ -155,6 +178,7 @@ Item {
                         anchors.right: parent.right
                         color: retanguloDeletar.SwipeDelegate.pressed ? "tomato" : "#F44336"
                         radius: 10
+                        //visible: (rectItemPai.height === 0) ? false : true;
 
                         Image {
                             id: iconeDelete
@@ -172,9 +196,19 @@ Item {
                                 textoTeleprompterTabPrincipal = "";
                             }
 
-                            viewLista.model.remove(indiceNoListModel, 1); // se remove depois do banco de dados, pois se remover antes, o item deixa de existir no model e seu indice vira -1.
+                            ponteiroParaSwipe.close();
+
+
+                            iconeDelete.visible = false;
+                            animacaoRemoveItem.running = true;
+
+                            //viewLista.model.remove(indiceNoListModel, 1); // se remove depois do banco de dados, pois se remover antes, o item deixa de existir no model e seu indice vira -1.
 
                         }
+                    }
+
+                    swipe.transition: Transition {
+                        SmoothedAnimation { velocity: 1.5; easing.type: Easing.InOutCubic }
                     }
 
                     background: Rectangle {
