@@ -18,7 +18,7 @@ Item {
     Rectangle {
         id: rectTextos
         anchors.fill: itemTextos
-        color: "#EEEEEE"
+        color: "#E0E0E0"
 
         RoundButton {
             id: btnAddTexto
@@ -249,6 +249,7 @@ Item {
                                     text: modelo.titulo
                                     font.pointSize: 30
                                     fontSizeMode: Text.Fit
+                                    leftPadding: 10
                                 }
                                 clip: true
                             }
@@ -270,6 +271,7 @@ Item {
                                     font.pointSize: 20
                                     fontSizeMode: Text.Fit
                                     wrapMode: TextEdit.Wrap
+                                    leftPadding: 10
                                 }
                                 clip: true
                             }

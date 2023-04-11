@@ -36,6 +36,7 @@ Item {
             ScrollView {
                 id: scrollViewTextAreaTextoEditar
                 Layout.fillWidth: true
+                anchors.top: textAreaTextoEditar.bottom
                 anchors.topMargin: 10
                 Layout.minimumHeight: rectPopUpEditarTexto.height * 60/100
                 Layout.maximumHeight: rectPopUpEditarTexto.height * 60/100
@@ -43,13 +44,14 @@ Item {
                 TextArea {
                     id: textAreaTextoEditar
                     Layout.alignment: Qt.AlignLeft
-                    anchors.topMargin: 10
-                    anchors.leftMargin: 2
+                    //anchors.topMargin: 10
+                    //anchors.leftMargin: 2
                     font.pointSize: 20
                     placeholderText: qsTr("Texto")
                     Layout.fillWidth: true
-                    Layout.minimumHeight: rectPopUpEditarTexto.height * 55/100
-                    Layout.maximumHeight: rectPopUpEditarTexto.height * 55/100
+                    Layout.fillHeight: true
+                    /*Layout.minimumHeight: rectPopUpEditarTexto.height * 55/100
+                    Layout.maximumHeight: rectPopUpEditarTexto.height * 55/100*/
                     wrapMode: TextEdit.Wrap
                 }
             }
@@ -84,6 +86,8 @@ Item {
                         database.updateData(model.rowid, JS_OBJ_texto);
                         textoModel.remove(indiceParaRemover, 1);
                         textoModel.insert(indiceParaInserir, JS_OBJ_texto);
+
+                        textoTeleprompterTabPrincipal = texto;
 
                         popUpEditarTexto.close();
 
