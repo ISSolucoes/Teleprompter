@@ -7,8 +7,8 @@ import QtQuick.LocalStorage
 ApplicationWindow {
     id: root
     visible: true
-    /*minimumWidth: 250
-    minimumHeight: 500*/
+    minimumWidth: 350
+    minimumHeight: 550
     title: qsTr("Teleprompter")
     color: "black"
     Material.accent: Material.Blue

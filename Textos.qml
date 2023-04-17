@@ -247,8 +247,10 @@ Item {
                                 Label {
                                     id: txtTitulo
                                     text: modelo.titulo
+                                    minimumPointSize: 10
                                     font.pointSize: 30
                                     fontSizeMode: Text.Fit
+                                    wrapMode: TextEdit.Wrap
                                     leftPadding: 10
                                 }
                                 clip: true
@@ -268,6 +270,7 @@ Item {
                                 Label {
                                     id: txtTexto
                                     text: modelo.texto
+                                    minimumPointSize: 5
                                     font.pointSize: 20
                                     fontSizeMode: Text.Fit
                                     wrapMode: TextEdit.Wrap

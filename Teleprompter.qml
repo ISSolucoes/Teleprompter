@@ -7,7 +7,7 @@ Item {
 
     property real posicaoBarraDeRolagem: 0.0
     property int cameraEscolhida: 1
-    property real referenciaIncrementoPosicaoBarraRolagem: 0.0025
+    property real referenciaIncrementoPosicaoBarraRolagem: 0.0018
     property real incrementoPosicaoBarraDeRolagem: referenciaIncrementoPosicaoBarraRolagem
     //property real ref_intervalTimer: 100
     //property real intervalTimer: ref_intervalTimer

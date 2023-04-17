@@ -43,7 +43,7 @@ Item {
                     //anchors.topMargin: 10
                     //anchors.leftMargin: 2
                     font.pointSize: 20
-                    placeholderText: qsTr("Texto")
+                    //placeholderText: qsTr("Texto")
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     /*Layout.minimumHeight: rectPopUpCriarTexto.height * 60/100
