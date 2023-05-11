@@ -6,12 +6,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 
+set(CMAKE_INSTALL_LIBDIR "lib")
+
 find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appTeleprompter
-    main.cpp Imagens.qrc
+    main.cpp Imagens.qrc Privacy_Policy.txt LICENSE.txt android/AndroidManifest.xml
 )
 
 qt_add_qml_module(appTeleprompter
@@ -26,6 +28,10 @@ set_target_properties(appTeleprompter PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+)
+
+set_property(TARGET appTeleprompter APPEND PROPERTY
+    QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
 
 target_link_libraries(appTeleprompter
